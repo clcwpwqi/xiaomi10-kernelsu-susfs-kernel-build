@@ -11,10 +11,6 @@ on:
         options:
           - 小米10
           - 小米10Pro
-      susfs:
-        description: '是否集成susfs'
-        required: true
-        type: boolean
       version:
         description: '自定义版本名（如perf-xxx）可为空（则为n0kernel）'
         required: false
@@ -52,15 +48,10 @@ jobs:
       - name: 4.修补KernelSU Next
         run: |
           ls
-          echo "进入源码目录"
-          cd $GITHUB_WORKSPACE/kernel_workspace/android_kernel
-          cp $GITHUB_WORKSPACE/kernel_workspace/src/patches/* .
-          patch -p1 < new_defconfig.patch
-          patch -p1 < non-kprobes.patch
+          echo "已经过预修复"
 
       - name: 5.修补susfs
         run: |
-          if [ ${{ inputs.susfs }} = true ]; then
             echo "选择susfs修补"
             cd $GITHUB_WORKSPACE/kernel_workspace/android_kernel
             echo "复制susfs/kernel_patches/fs/"
@@ -72,10 +63,7 @@ jobs:
             echo "执行susfs补丁"
             patch -p1 < 50_add_susfs_in_kernel-4.19.patch || true
             echo "修复susfs补丁"
-            patch -p1 < after_patch_fix.patch            
-          else
-            echo "跳过susfs修补"
-          fi
+            patch -p1 < after_patch_fix.patch
         
       - name: 6.开始构建
         run: |
