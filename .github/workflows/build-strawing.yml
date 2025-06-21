@@ -3,8 +3,16 @@ run-name: Build Kernel strawing with KernelSU Next susfs
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: '自定义版本名（如perf-xxx）'
+      roota:
+        description: '是否集成root'
+        required: true
+        default: 'SUSFS'
+        type: choice
+        options:
+          - noksu
+          - ksu
+      phonea:
+        description: '输入机型代号（如小米10 umi）'
         required: false
         type: string
 jobs:
@@ -32,11 +40,11 @@ jobs:
           cd $GITHUB_WORKSPACE/kernel_workspace
           git clone https://github.com/clcwpwqi/kernel_865_mod -b android15-lineage22-mod --depth=1 android_kernel
           cd android_kernel
-          bash build-action.sh umi ksu
+          bash build-action.sh ${{ inputs.phonea }} ${{ inputs.roota}}
 
       - name: 3.上传刷机包
         uses: actions/upload-artifact@v4
         with:
-          name: SukiSU-Ultra-KPM-SUSFS-AnyKernel3-${{ inputs.version }}
+          name: ${{ inputs.phonea }}-SukiSU-Ultra-KPM-SUSFS-AnyKernel3-${{ inputs.version }}
           path: kernel_workspace/android_kernel/anykernel*
           retention-days: 3
