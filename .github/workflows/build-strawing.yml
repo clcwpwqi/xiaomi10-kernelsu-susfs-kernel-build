@@ -1,5 +1,5 @@
 name: Build Kernel strawing
-run-name: Build Kernel strawing with KernelSU Next susfs
+run-name: Build Kernel with SukiSU Ultra KPM SUSFS
 on:
   workflow_dispatch:
     inputs:
