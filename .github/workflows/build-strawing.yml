@@ -45,6 +45,6 @@ jobs:
       - name: 3.上传刷机包
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.phonea }}-SukiSU-Ultra-KPM-SUSFS-AnyKernel3-${{ inputs.version }}
-          path: kernel_workspace/android_kernel/anykernel*
+          name: ${{ inputs.phonea }}--${{ inputs.version }}-kernel-AnyKernel3
+          path: kernel_workspace/android_kernel/anykernel/*
           retention-days: 3
