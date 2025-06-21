@@ -4,13 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       roota:
-        description: '是否集成root'
-        required: true
-        default: 'SUSFS'
-        type: choice
-        options:
-          - noksu
-          - ksu
+        description: '是否需要ksu（不需要留空即可）'
+        required: false
+        type: string
       phonea:
         description: '输入机型代号（如小米10 umi）'
         required: false
@@ -45,6 +41,6 @@ jobs:
       - name: 3.上传刷机包
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.phonea }}--${{ inputs.version }}-kernel-AnyKernel3
+          name: ${{ inputs.phonea }}-${{ inputs.roota }}-kernel-AnyKernel3
           path: kernel_workspace/android_kernel/anykernel/*
           retention-days: 3
